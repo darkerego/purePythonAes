@@ -10,40 +10,50 @@ tips ethercrypt.eth
 </p>
 
 
+## Installation
+
+
+<pre>
+pip3 install purePyAES
+</pre>
+
 
 ## Example Usage
 
 <pre>
-import pureaes.py_aes
-
+from purePyAES.py_aes import AesWrapper
 
 def gen_random_key():
-    with open('./key.temp', 'wb') as kt:
-        with open("/dev/urandom", 'rb') as fb:
-            fb = fb.read(32)
-            return fb.hex().__str__()
+    with open("/dev/urandom", 'rb') as fb:
+        fb = fb.read(32)
+        return fb.hex().__str__()
 
 
 if __name__ == "__main__":
     """
-    Example usage.
+    Example usage. Super straightforward.
+    First written for BlitzKloud. There was no pure python AES
+    at that time.
     """
-
+    # Generate a key. Must be either 8,16, or 32 characters
     print('[+] Generating a random AES key ...')
     key = gen_random_key()[:32]
-    print('[+] AES key generated: {}'.format(key), len(key))
-    aes = pureaes.py_aes.AesWrapper(key.encode())  # must be at least 8 chars, multiples of 8 IIRC. Maybe 16 idk.
-    enc_input = input('type something >> ')
+    print('[+] AES key generated: {}'.format(key))
+    aes = AesWrapper(key.encode())  # also should be bytes
+    enc_input = input('type something >> ') # input some data to encrypt
     if not enc_input or enc_input.strip('\r\n') == '':
         print("[+] Or don't")
         enc_input = 'test this data'
         print('[+] We will use `test this data` then ...')
-    print('[$] aes.encrypt: ')
+    print('[encrypted] (b64 wrapped) aes encrypted data `aes.encrypt`: ')
     enc_data = aes.encrypt(enc_input)
-    print('[enc] %s' % enc_data)
+    print(enc_data)
     denc_data = aes.decrypt(enc_data)
     print('aes.decrypt: ')
-    print('[denc] %s' % denc_data)
+    print('[decrypted] %s data aes.decrypt`')
+    print(denc_data)
+
+
 
 
 </pre>
