@@ -1,27 +1,38 @@
-from py_aes import AesWrapper
-import base64
+# What?
+
+<p> The original zero dependency python only AES 
+implemntation. See 
+  
+  [blitzkloud](https://github.com/darkerego/blitzkloud) </p>
+
+<p>
+tips ethercrypt.eth
+</p>
+
+
+
+## Example Usage
+
+<pre>
+import pureaes.py_aes
 
 
 def gen_random_key():
     with open('./key.temp', 'wb') as kt:
         with open("/dev/urandom", 'rb') as fb:
             fb = fb.read(32)
-            kt.write(base64.b64encode(fb))
-
-    with open('./key.temp', 'rb') as f:
-        return f.read()[16:]
+            return fb.hex().__str__()
 
 
 if __name__ == "__main__":
     """
-    Example usage. Super straightfoward. I did it first! See BlitzKloud. There was no pure python AES
-    at that time. Hire me, I am that good.
+    Example usage.
     """
 
     print('[+] Generating a random AES key ...')
-    key = gen_random_key()[:16]
-    print('[+] AES key generated: {}'.format(key.decode()), len(key))
-    aes = AesWrapper(key)  # must be at least 8 chars, multiples of 8 IIRC. Maybe 16 idk.
+    key = gen_random_key()[:32]
+    print('[+] AES key generated: {}'.format(key), len(key))
+    aes = pureaes.py_aes.AesWrapper(key.encode())  # must be at least 8 chars, multiples of 8 IIRC. Maybe 16 idk.
     enc_input = input('type something >> ')
     if not enc_input or enc_input.strip('\r\n') == '':
         print("[+] Or don't")
@@ -33,3 +44,6 @@ if __name__ == "__main__":
     denc_data = aes.decrypt(enc_data)
     print('aes.decrypt: ')
     print('[denc] %s' % denc_data)
+
+
+</pre>

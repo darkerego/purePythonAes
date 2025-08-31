@@ -1000,8 +1000,7 @@ class AesWrapper:
             except Exception as err:
                 if self.debug:
                     print(err)
-                decoded = None
-
+                return None
         if decoded:
             try:
                 decrypted = aes.decrypt(decoded)
@@ -1010,11 +1009,14 @@ class AesWrapper:
                     print('Error decrypting: ' + str(err))
             else:
                 return decrypted
+        return None
 
-    def encrypt(self, data):
+    def encrypt(self, data) -> str:
         return self.enc(data)
 
-    def decrypt(self, data):
-        return self.denc(data)
-
+    def decrypt(self, data) -> str:
+        _decrypted = self.denc(data)
+        if isinstance(_decrypted, bytes):
+            return _decrypted.decode('utf-8')
+        return _decrypted
 
