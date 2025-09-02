@@ -6,7 +6,7 @@ import base64
 import copy
 import struct
 
-__all__ = ["AES", "AESModeOfOperationCTR", "AESModesOfOperation", "Counter"]
+__all__ = ["AES", "AESModeOfOperationCTR", "AESModesOfOperation", "Counter", "AesWrapper"]
 
 
 def _compact_word(word):
@@ -25,7 +25,7 @@ def _concat_list(a, b):
     return a + b
 
 
-# Python 3 compatibility
+# Python 2 backward compatibility because I wrote this so long ago LOL
 try:
     xrange
 except NameError:
@@ -959,10 +959,41 @@ def decrypt_stream(mode, in_stream, out_stream, block_size=BLOCK_SIZE, padding=P
 
 
 """
+=============================================
+AES Wrapper. Import this. See example usage:
+==============================================
+from purePyAES.py_aes import AesWrapper
+def gen_random_key():
+    with open("/dev/urandom", 'rb') as fb:
+        fb = fb.read(32)
+        return fb.hex().__str__()
 
-Main Program Logic Starts here 
+    Example usage. Super straightforward.
+    First written for BlitzKloud. There was no pure python AES
+    at that time.
+    
+    # Generate a key. Must be either 8,16, or 32 characters
+    print('[+] Generating a random AES key ...')
+    key = gen_random_key()[:32]
+    print('[+] AES key generated: {}'.format(key))
+    aes = AesWrapper(key.encode())  # also should be bytes
+    enc_input = input('type something >> ') # input some data to encrypt
+    if not enc_input or enc_input.strip('\r\n') == '':
+        print("[+] Or don't")
+        enc_input = 'test this data'
+        print('[+] We will use `test this data` then ...')
+    print('[encrypted] (b64 wrapped) aes encrypted data `aes.encrypt`: ')
+    enc_data = aes.encrypt(enc_input)
+    print(enc_data)
+    denc_data = aes.decrypt(enc_data)
+    print('aes.decrypt: ')
+    print('[decrypted] %s data aes.decrypt`')
+    print(denc_data)
+    
+    
+    """
 
-"""
+
 
 
 class AesWrapper:

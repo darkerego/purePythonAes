@@ -3,7 +3,7 @@ requires = ["hatchling >= 1.26"]
 build-backend = "hatchling.build"
 [project]
 name = "purePyAES"
-version = "0.0.4"
+version = "0.0.5"
 uthors = [
   { name="Chev Y", email="chevisyoung@gmail.com" },
 ]

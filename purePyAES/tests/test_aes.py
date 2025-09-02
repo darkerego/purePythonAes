@@ -15,7 +15,7 @@ def gen_random_key():
 
 if __name__ == "__main__":
     """
-    Example usage. Super straightfoward. I did it first! See BlitzKloud. There was no pure python AES
+    Example usage. Super straightforward. I did it first! See BlitzKloud. There was no pure python AES
     at that time. Hire me, I am that good.
     """
 
