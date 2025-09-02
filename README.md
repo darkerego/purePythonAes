@@ -8,7 +8,7 @@
 
 
 <pre>
-pip install purePyAES==0.0.4
+pip install purePyAES
 </pre>
 
 
